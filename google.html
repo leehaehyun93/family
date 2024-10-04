@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>구글 명령어</title>
+        <link rel="icon" href="img/google.png" />
+        <link
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
+        />
+        <script>
+            window.addEventListener("scroll", function () {
+                // 현재 스크롤 위치
+                const scrollTop = window.scrollY;
+                // 문서 전체의 높이
+                const documentHeight = document.documentElement.scrollHeight;
+                // 뷰포트 높이
+                const windowHeight = window.innerHeight;
+
+                // 맨 아래에 도달했을 때
+                if (scrollTop + windowHeight >= documentHeight) {
+                    window.scrollTo(0, documentHeight - windowHeight - 1); // 맨 아래에서 1픽셀 위로 이동
+                }
+            });
+        </script>
+        <style>
+            html,
+            body {
+                overscroll-behavior-y: none;
+                overscroll-behavior-x: none;
+            }
+            body {
+                font-family: "Pretendard", sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                min-height: 100vh;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background-color: rgba(255, 255, 255, 0.9);
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            .category-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            .category-btn {
+                padding: 10px 20px;
+                margin: 5px;
+                border: 2px solid #4caf50;
+                border-radius: 25px;
+                background-color: transparent;
+                color: #4caf50;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .category-btn.active {
+                background-color: #4caf50;
+                color: white;
+                box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            }
+            .category-btn:hover {
+                transform: translateY(-2px);
+            }
+            table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                margin-top: 20px;
+            }
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #4caf50;
+                color: white;
+                border-color: #45a049;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            tr:hover {
+                background-color: #e9e9e9;
+            }
+            @media (max-width: 768px) {
+                .category-buttons {
+                    flex-direction: column;
+                }
+                .category-btn {
+                    width: 100%;
+                    margin: 5px 0;
+                }
+                table {
+                    border: 1px solid #ddd;
+                }
+                thead {
+                    display: none;
+                }
+                tr {
+                    margin-bottom: 10px;
+                    display: block;
+                    border-bottom: 2px solid #4caf50;
+                }
+                td {
+                    display: block;
+                    text-align: right;
+                    padding-left: 50%;
+                    position: relative;
+                    border-bottom: 1px solid #ddd;
+                }
+                td:last-child {
+                    border-bottom: none;
+                }
+                td:before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 6px;
+                    width: 45%;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                    text-align: left;
+                    font-weight: bold;
+                    color: #4caf50;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>구글 스마트홈</h1>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="전체">전체</button>
+                <button class="category-btn" data-category="공통">공통</button>
+                <button class="category-btn" data-category="부엌">부엌</button>
+                <button class="category-btn" data-category="큰 방">큰 방</button>
+                <button class="category-btn" data-category="유진방">유진방</button>
+                <button class="category-btn" data-category="해현방">해현방</button>
+                <button class="category-btn" data-category="거실">거실</button>
+            </div>
+            <table id="commandTable">
+                <thead>
+                    <tr>
+                        <th>명령어</th>
+                        <th>기능</th>
+                        <th>위치</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 데이터 행은 여기에 추가됩니다 -->
+                    <!-- 데이터 시작 -->
+                    <tr data-category="공통">
+                        <td data-label="명령어">날씨 알려줘/오늘 날씨</td>
+                        <td data-label="기능">오늘의 날씨 정보를 알려줍니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">유진이 불러</td>
+                        <td data-label="기능">거실 스피커에서 유진이를 호출합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">해현이 불러/오빠 불러</td>
+                        <td data-label="기능">해현 스피커에서 해현이를 호출합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">밥 먹어</td>
+                        <td data-label="기능">모든 스피커에 식사를 알립니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">청소 시작</td>
+                        <td data-label="기능">해현방에 창문을 열고 로봇청소기가 동작합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">청소 끝</td>
+                        <td data-label="기능">해현방에 창문을 닫고 로봇청소기가 돌아갑니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">엄마 알아?</td>
+                        <td data-label="기능">구글 스피커가 엄마를 소개합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">아빠 알아?</td>
+                        <td data-label="기능">구글 스피커가 아빠를 소개합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">유진이 알아?</td>
+                        <td data-label="기능">구글 스피커가 이유진을 소개합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="공통">
+                        <td data-label="명령어">오빠/해현이 알아?</td>
+                        <td data-label="기능">구글 스피커가 이해현을 소개합니다.</td>
+                        <td data-label="위치">공통</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">부엌 불꺼</td>
+                        <td data-label="기능">부엌 전체의 조명의 끕니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">부엌 불켜</td>
+                        <td data-label="기능">부엌 전체의 조명의 켭니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">식탁 불꺼</td>
+                        <td data-label="기능">부엌 식탁의 조명의 끕니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">식탁 불켜</td>
+                        <td data-label="기능">부엌 식탁의 조명의 켭니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">출구 불꺼</td>
+                        <td data-label="기능">부엌 현관의 조명의 끕니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">출구 불켜</td>
+                        <td data-label="기능">부엌 현관의 조명의 켭니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">커피</td>
+                        <td data-label="기능">커피머신에서 커피를 내립니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="부엌">
+                        <td data-label="명령어">문열어</td>
+                        <td data-label="기능">집 문을 엽니다.</td>
+                        <td data-label="위치">부엌</td>
+                    </tr>
+                    <tr data-category="큰 방">
+                        <td data-label="명령어">큰 방 불 꺼</td>
+                        <td data-label="기능">큰 방의 조명을 끕니다.</td>
+                        <td data-label="위치">큰 방</td>
+                    </tr>
+                    <tr data-category="큰 방">
+                        <td data-label="명령어">큰 방 불 켜</td>
+                        <td data-label="기능">큰 방의 조명을 켭니다.</td>
+                        <td data-label="위치">큰 방</td>
+                    </tr>
+                    <tr data-category="큰 방">
+                        <td data-label="명령어">침대 불 꺼</td>
+                        <td data-label="기능">큰 방의 침대 조명을 끕니다.</td>
+                        <td data-label="위치">큰 방</td>
+                    </tr>
+                    <tr data-category="큰 방">
+                        <td data-label="명령어">침대 불 켜</td>
+                        <td data-label="기능">큰 방의 침대 조명을 켭니다.</td>
+                        <td data-label="위치">큰 방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">베란다 불 꺼</td>
+                        <td data-label="기능">베란다의 조명을 끕니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">베란다 불 켜</td>
+                        <td data-label="기능">베란다의 조명을 켭니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">유진방 불 꺼</td>
+                        <td data-label="기능">유진방의 조명을 끕니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">유진방 불 켜</td>
+                        <td data-label="기능">유진방의 조명을 켭니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">세탁기 켜</td>
+                        <td data-label="기능">세탁기가 작동하도록 전원을 켭니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="유진방">
+                        <td data-label="명령어">건조기 켜</td>
+                        <td data-label="기능">건조기가 작동하도록 전원을 켭니다.</td>
+                        <td data-label="위치">유진방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">냉방 모드</td>
+                        <td data-label="기능">에어컨 냉방 모드 실행</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">완전 더워</td>
+                        <td data-label="기능">냉방기기가 모두 꺼진 상태에서 전체 켭니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">방 불 꺼/이제 잔다</td>
+                        <td data-label="기능">해현방의 조명을 끕니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">방 불 켜/이제 기상</td>
+                        <td data-label="기능">해현방의 조명을 켭니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 선풍기 꺼</td>
+                        <td data-label="기능">해현방 선풍기를 끕니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 선풍기 켜</td>
+                        <td data-label="기능">해현방 선풍기를 켭니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 선풍기 예약</td>
+                        <td data-label="기능">해현방 선풍기를 2시간 예약합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">선풍기 모드</td>
+                        <td data-label="기능">해현방 선풍기의 모드를 변경합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 에어컨 꺼</td>
+                        <td data-label="기능">해현방 에어컨을 끕니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 에어컨 켜</td>
+                        <td data-label="기능">해현방 에어컨을 켭니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">오빠 에어컨 예약</td>
+                        <td data-label="기능">해현방 에어컨을 2시간 예약합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">제습 모드</td>
+                        <td data-label="기능">해현방 에어컨 제습 모드를 실행합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">창문 닫아</td>
+                        <td data-label="기능">해현방 창문을 닫습니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">창문 열어</td>
+                        <td data-label="기능">해현방 창문을 엽니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">애플 맥</td>
+                        <td data-label="기능">해현방 컴퓨터를 맥으로 전환합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="해현방">
+                        <td data-label="명령어">윈도우</td>
+                        <td data-label="기능">해현방 컴퓨터를 윈도우로 전환합니다.</td>
+                        <td data-label="위치">해현방</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 꺼</td>
+                        <td data-label="기능">거실의 TV를 끕니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 켜</td>
+                        <td data-label="기능">거실의 TV를 켭니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 뒤로</td>
+                        <td data-label="기능">거실TV의 메뉴에서 나갑니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">릭스 켜</td>
+                        <td data-label="기능">거실TV에서 넷플릭스를 켭니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 내려</td>
+                        <td data-label="기능">거실TV의 불륨을 줄입니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 올려</td>
+                        <td data-label="기능">거실TV의 불륨을 높힙니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 시끄러</td>
+                        <td data-label="기능">거실TV를 음소거합니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">거실 채널</td>
+                        <td data-label="기능">거실TV에서 추천 채널로 바꿉니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">MBC</td>
+                        <td data-label="기능">거실TV MBC 뉴스 채널 11번으로 이동합니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">KBS</td>
+                        <td data-label="기능">거실TV KBS2 채널 07번으로 이동합니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                    <tr data-category="거실">
+                        <td data-label="명령어">SBS</td>
+                        <td data-label="기능">거실TV SBS 채널 05번으로 이동합니다.</td>
+                        <td data-label="위치">거실</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const categoryButtons = document.querySelectorAll(".category-btn");
+                const tableRows = document.querySelectorAll("#commandTable tbody tr");
+
+                categoryButtons.forEach((button) => {
+                    button.addEventListener("click", function () {
+                        const category = this.getAttribute("data-category");
+
+                        // 모든 버튼에서 active 클래스 제거
+                        categoryButtons.forEach((btn) => btn.classList.remove("active"));
+
+                        // 클릭된 버튼에 active 클래스 추가
+                        this.classList.add("active");
+
+                        filterTable(category);
+                    });
+                });
+
+                function filterTable(category) {
+                    tableRows.forEach((row) => {
+                        const rowCategory = row.getAttribute("data-category");
+                        if (category === "전체" || rowCategory === category) {
+                            row.style.display = "";
+                        } else {
+                            row.style.display = "none";
+                        }
+                    });
+                }
+
+                // 초기 필터링 (전체 카테고리)
+                filterTable("전체");
+            });
+        </script>
+    </body>
+</html>
